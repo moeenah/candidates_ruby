@@ -1,16 +1,32 @@
-# In this file we define the methods to help filter out candidates
-# This way, we keep these methods separated from other potential parts of the program
-
 def find(id)
-  # Your code Here
+ for candidate in @candidates do
+  if (candidate[:id] == id)
+    return candidate
+  end
+end
+return nil
 end
 
 def experienced?(candidate)
-  # Your code Here
+  if candidate[:years_of_experience] > 2
+    return true
+  else
+    return false
+  end
 end
 
 def qualified_candidates(candidates)
-  # Your code Here
+  arr = [];
+  for candidate in @candidates do
+    if (candidate[:years_of_experience] > 2 && candidate[:github_points] > 100 && (candidate[:languages].include?('Ruby') || candidate[:languages].include?('Python')) && candidate[:date_applied] > 15.days.ago.to_date  && candidate[:age] > 17)
+      arr.push(candidate)
+    end
+  end
+    return arr if arr.length > 1
+    return 'no candidate found'
 end
 
-# More methods will go below
+def ordered_by_qualifications(candidates)
+ candidates.sort_by! {|obj| [-obj[:years_of_experience], -obj[:github_points]]}
+ return candidates
+end
